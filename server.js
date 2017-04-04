@@ -1,42 +1,27 @@
-/* Create HTTP server */
-import http from 'http';
+import config from './config';
+//import fs from 'fs';
+//don't need the fs module if we are using the Express static middleware.
+import apiRouter from './api';
+import express from 'express';
 
-const server = http.createServer((req, res) => {
-  res.write('Hello HTTP\n');
-  setTimeout(() => {
-    res.write('I can stream!\n');
-    res.end()
-  }, 3000)
+const server = express();
+
+server.get('/', (req, res) => {
+  res.send('Hello Express');
 });
 
-server.listen(8080);
-
-//createServer gives us an event emitter object
-// that we can subscribe to.
-// The most important emitted event is the request event
-// which gets emitted every time the http server receives a request
-//server.on('request', (req, res) => {
-  //res.write('Hello HTTP\n');
-  //setTimeout(() => {
-    //res.write('I can stream!\n');
-    //res.end()
-  //}, 3000)
-//});
-
-/* using HTTP as a server */
-
-
-/* Using HTTP or HTTPS as a client */
-//import https from 'https';
-
-//https.get('https://www.lynda.com', res => {
-  //console.log('Response status code: ', res.statusCode);
-
-  //res.on('data', chunk => {
-    //console.log(chunk.toString());
+server.use('/api', apiRouter);
+/* using the static middleware to serve files from the public folder */
+server.use(express.static('public'));
+/* instead of doing this, use the static middleware */
+//server.get('/about.html', (req, res) => {
+  //fs.readFile('./about.html', (err, data) => {
+    //res.send(data.toString());
   //});
 //});
 
-//import config, { nodeEnv, logStars } from './config';
-//console.log(config, nodeEnv);
-//logStars('My msg is, Node rocks')
+server.listen(config.port, () => {
+  console.log('Express is listening on port ', config.port);
+});
+
+
