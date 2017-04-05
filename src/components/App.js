@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import Header from './Header';
 import ContestPreview from './ContestPreview';
+//import data from '../testData';
 
 class App extends Component {
   // since we are using stage-2
   // we can use this syntax and use a class property.
   state = {
-    pageHeader: 'Naming Contests!'
+    pageHeader: 'Naming Contests!',
+    contests: []
   };
   //constructor(props) {
     //super(props);
@@ -16,6 +18,9 @@ class App extends Component {
   //}
   componentDidMount() {
     // used for AJAX, Timers, Listeners
+    this.setState({
+      contests: data.contests
+    });
   }
 
   componentWillUnmount() {
@@ -28,8 +33,8 @@ class App extends Component {
       <div className='App'>
         <Header message={this.state.pageHeader} />
         <div>
-          {this.props.contests.map(contests =>
-            <ContestPreview {...contests} />
+          {this.state.contests.map(contest =>
+            <ContestPreview key={contest.id} {...contest} />
           )}
         </div>
       </div>
