@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Header from './Header';
 import ContestPreview from './ContestPreview';
-import axios from 'axios';
 
 class App extends Component {
   state = {
@@ -9,14 +8,7 @@ class App extends Component {
     contests: this.props.initialContests
   };
   componentDidMount() {
-    // ajax call..
-    axios.get('/api/contests')
-      .then(response => {
-        this.setState({
-          contests: response.data.contests
-        });
-      })
-      .catch(console.error)
+
   }
 
   componentWillUnmount() {
