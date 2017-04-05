@@ -7,7 +7,6 @@ const server = express();
 server.set('view engine', 'ejs');
 
 server.get('/', (req, res) => {
-  //res.send('Hello, Express!');
   res.render('index', {
     content: '<h1>Hello Express and EJS!</h1>'
   });
