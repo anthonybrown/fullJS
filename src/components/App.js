@@ -1,26 +1,22 @@
 import React, { Component } from 'react';
 import Header from './Header';
 import ContestPreview from './ContestPreview';
-//import data from '../testData';
+import axios from 'axios';
 
 class App extends Component {
-  // since we are using stage-2
-  // we can use this syntax and use a class property.
   state = {
     pageHeader: 'Naming Contests!',
-    contests: []
+    contests: this.props.initialContests
   };
-  //constructor(props) {
-    //super(props);
-    //this.state = {
-      //test: 42
-    //}
-  //}
   componentDidMount() {
-    // used for AJAX, Timers, Listeners
-    this.setState({
-      contests: data.contests
-    });
+    // ajax call..
+    axios.get('/api/contests')
+      .then(response => {
+        this.setState({
+          contests: response.data.contests
+        });
+      })
+      .catch(console.error)
   }
 
   componentWillUnmount() {
